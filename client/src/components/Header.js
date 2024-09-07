@@ -1,45 +1,37 @@
 import React from 'react';
+import {getAccentClass} from "./utilities";
+import DarkModeToggle from "./DarkModeToggle";
+import axios from "axios";
 
-const accentColors = ['red', 'blue', 'green', 'yellow', 'pink'];
+const accentColors = ['red', 'blue', 'green', 'yellow', 'pink', 'purple', 'indigo', 'gray', 'teal', 'orange', 'emerald', 'lime', 'rose', 'fuchsia', 'violet', 'sky'];
 
-const Header = ({ darkMode, setDarkMode, accentColor, setAccentColor, updatePreferences }) => {
-    const handleThemeToggle = () => {
-        const newMode = !darkMode;
-        setDarkMode(newMode);
-        updatePreferences({ dark_mode: newMode, accent_color: accentColor });
-
-    };
-
-    const handleColorChange = (e) => {
-        const newColor = e.target.value;
-        setAccentColor(newColor);
-        updatePreferences({ dark_mode: darkMode, accent_color: newColor });
+const Header = ({ darkMode, setDarkMode, accentColor, setAccentColor }) => {
+    const handleColorChange = async (color) => {
+        try {
+            await axios.post('http://localhost:5000/preferences/accent-color', { accent_color: color }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+            });
+            setAccentColor(color);
+        } catch (error) {
+            console.error('Error updating preferences:', error);
+        }
     };
 
     return (
-        <header className={`p-4 ${darkMode ? 'bg-gray-800 text-gray-100' : 'bg-gray-100 text-gray-900'} flex justify-between items-center`}>
-            <h1 className="text-xl">Notable</h1>
-            <div>
-                <label className="mr-2">Dark Mode</label>
-                <div className="tdnn">
-                    <div className="moon">
-                    </div>
+        <header className={`p-4 flex justify-between items-center`}>
+            <h1 className={`text-3xl ${getAccentClass(accentColor, 'text')}`}>Notable</h1>
+            <div className="flex flex-row">
+                {accentColors.map((color) => (
+                    <div
+                        style={{ width: '20px', height: '20px' }}
+                        key={color}
+                        className={`m-auto ${getAccentClass(color, 'background')} rounded-full mr-2 cursor-pointer ${color === accentColor ? 'border-2 border-white' : ''}`}
+                        onClick={() => handleColorChange(color)}
+                    ></div>
+                ))}
+                <div className="header-right">
+                    <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
                 </div>
-                <input
-                    type="checkbox"
-                    checked={darkMode}
-                    onChange={handleThemeToggle}
-                />
-                <label className="ml-4 mr-2">Accent Color</label>
-                <select
-                    value={accentColor}
-                    onChange={handleColorChange}
-                    className="p-2 border rounded"
-                >
-                    {accentColors.map(color => (
-                        <option key={color} value={color}>{color.charAt(0).toUpperCase() + color.slice(1)}</option>
-                    ))}
-                </select>
             </div>
         </header>
     );

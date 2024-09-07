@@ -1,3 +1,16 @@
+const colors = [
+  'red', 'blue', 'green', 'yellow', 'pink',
+  'cyan', 'purple', 'indigo', 'gray', 'teal',
+  'orange', 'emerald', 'lime', 'rose', 'fuchsia',
+  'violet', 'sky'
+];
+
+const accentColors = colors.map((color) => ({
+  bg: `bg-${color}-300`,
+  hover: `hover:bg-${color}-400`,
+  text: `text-${color}-300`
+}));
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -9,11 +22,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  safelist: [
-    'bg-red-400', 'hover:bg-red-500', 'text-red-500',
-    'bg-blue-400', 'hover:bg-blue-500', 'text-blue-500',
-    'bg-green-400', 'hover:bg-green-500', 'text-green-500',
-    'bg-yellow-400', 'hover:bg-yellow-500', 'text-yellow-500',
-    'bg-pink-400', 'hover:bg-pink-500', 'text-pink-500'
-  ],
+  safelist: accentColors.flatMap(color => [color.bg, color.hover, color.text]),
 };

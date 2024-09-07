@@ -23,18 +23,33 @@ router.get('/', authenticateToken, (req, res) => {
     });
 });
 
-router.post('/', authenticateToken, (req, res) => {
+router.post('/accent-color', authenticateToken, (req, res) => {
     const userId = req.user.id;
-    const { dark_mode, accent_color } = req.body;
+    const { accent_color } = req.body;
 
     db.run(`
-        INSERT INTO preferences (user_id, dark_mode, accent_color) 
-        VALUES (?, ?, ?) 
+        INSERT INTO preferences (user_id, accent_color) 
+        VALUES (?, ?) 
         ON CONFLICT(user_id) 
-        DO UPDATE SET dark_mode=excluded.dark_mode, accent_color=excluded.accent_color
-    `, [userId, dark_mode, accent_color], (err) => {
-        if (err) return res.status(500).json({ error: 'Failed to update preferences' });
-        res.status(200).json({ message: 'Preferences updated successfully' });
+        DO UPDATE SET accent_color=excluded.accent_color
+    `, [userId, accent_color], (err) => {
+        if (err) return res.status(500).json({ error: 'Failed to update accent color preference' });
+        res.status(200).json({ message: 'Accent color preference updated successfully' });
+    });
+});
+
+router.post('/dark-mode', authenticateToken, (req, res) => {
+    const userId = req.user.id;
+    const { dark_mode } = req.body;
+
+    db.run(`
+        INSERT INTO preferences (user_id, dark_mode) 
+        VALUES (?, ?) 
+        ON CONFLICT(user_id) 
+        DO UPDATE SET dark_mode=excluded.dark_mode
+    `, [userId, dark_mode], (err) => {
+        if (err) return res.status(500).json({ error: 'Failed to update dark mode preference' });
+        res.status(200).json({ message: 'Dark mode preference updated successfully' });
     });
 });
 

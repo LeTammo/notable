@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
@@ -9,7 +9,7 @@ import Container from './components/Container';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [accentColor, setAccentColor] = useState('blue'); // Default color
+    const [accentColor, setAccentColor] = useState('blue');
     const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
@@ -20,6 +20,11 @@ function App() {
             fetchPreferences();
         }
     }, []);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', darkMode);
+        document.body.className = darkMode ? '' : 'light';
+    }, [darkMode]);
 
     const fetchPreferences = async () => {
         const token = localStorage.getItem('token');
@@ -35,20 +40,6 @@ function App() {
         }
     };
 
-    const updatePreferences = async (preferences) => {
-        const token = localStorage.getItem('token');
-        try {
-            await axios.post('http://localhost:5000/preferences', preferences, {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setDarkMode(preferences.dark_mode);
-            setAccentColor(preferences.accent_color);
-            document.documentElement.classList.toggle('dark', preferences.dark_mode);
-        } catch (error) {
-            console.error('Error updating preferences:', error);
-        }
-    };
-
     return (
         <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
             <Router>
@@ -57,7 +48,6 @@ function App() {
                     setDarkMode={setDarkMode}
                     accentColor={accentColor}
                     setAccentColor={setAccentColor}
-                    updatePreferences={updatePreferences}
                 />
                 <Container>
                     <Routes>

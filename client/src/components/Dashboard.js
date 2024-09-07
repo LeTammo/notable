@@ -48,7 +48,7 @@ const Dashboard = ({ accentColor }) => {
                 className="block w-full mb-4 p-2 border rounded"
             />
             <button
-                className={`mb-4 p-2 ${getAccentClass(accentColor, 'background')} text-white rounded transition`}
+                className={`mb-4 p-2 ${getAccentClass(accentColor, 'background')} text-black rounded transition`}
                 onClick={() => navigate('/create')}
             >
                 Create New Wiki Note
