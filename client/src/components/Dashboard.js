@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Container from './Container';
-import { getAccentClass } from './utilities';
+import { getAccentClass } from './utilities/accentClasses';
+import ButtonPrimary from "./buttons/ButtonPrimary";
+import InputText from "./forms/InputText";
 
 const Dashboard = ({ accentColor }) => {
     const navigate = useNavigate();
@@ -38,21 +39,10 @@ const Dashboard = ({ accentColor }) => {
     };
 
     return (
-        <Container className="p-6">
+        <div className="p-6">
             <h1 className="text-3xl mb-6">Your Wiki Entries</h1>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={handleSearch}
-                className="block w-full mb-4 p-2 border rounded"
-            />
-            <button
-                className={`mb-4 p-2 ${getAccentClass(accentColor, 'background')} text-black rounded transition`}
-                onClick={() => navigate('/create')}
-            >
-                Create New Wiki Note
-            </button>
+            <InputText placeholder="Search..." value={searchTerm} setValue={setSearchTerm} />
+            <ButtonPrimary accentColor={accentColor} text="＋" onClick={() => navigate('/create')} />
             <div>
                 {entries.map((entry) => (
                     <div key={entry.id} className="mb-4 p-4 rounded shadow">
@@ -70,7 +60,7 @@ const Dashboard = ({ accentColor }) => {
                     Load More
                 </button>
             )}
-        </Container>
+        </div>
     );
 };
 

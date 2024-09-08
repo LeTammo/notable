@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FormSubmit from "./FormSubmit";
-import FormInputText from "./FormInputText";
-import {getAccentClass} from "./utilities";
+import Submit from "../forms/Submit";
+import InputText from "../forms/InputText";
+import { getAccentClass } from "../utilities/accentClasses";
 
 const Login = ({ accentColor }) => {
     const [username, setUsername] = useState('');
@@ -24,21 +24,21 @@ const Login = ({ accentColor }) => {
         <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
             <h1 className="text-2xl mb-4">Log in to Notable</h1>
             <form onSubmit={handleLogin}>
-                <FormInputText accentColor={accentColor}
-                               placeholder="Username"
-                               value={username}
-                               setValue={setUsername}
-                               required />
-                <FormInputText accentColor={accentColor}
-                               placeholder="Password"
-                               value={password}
-                               setValue={setPassword}
-                               required />
-                <FormSubmit accentColor={accentColor} text="Log in" />
+                <InputText accentColor={accentColor}
+                           placeholder="Username"
+                           value={username}
+                           setValue={setUsername}
+                           required />
+                <InputText accentColor={accentColor}
+                           placeholder="Password"
+                           value={password}
+                           setValue={setPassword}
+                           required />
+                <Submit accentColor={accentColor} text="Log in" />
             </form>
             <div className="mt-4 text-center">
                 <div>Don't have an account?</div>
-                <div className={`${getAccentClass(accentColor, 'text')}`}><a href="/register">Register here</a></div>
+                <div className={`${getAccentClass(accentColor, 'text')}`}><a href="/auth/Register">Register here</a></div>
             </div>
         </div>
     );

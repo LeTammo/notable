@@ -1,5 +1,5 @@
 import React from 'react';
-import {getAccentClass} from "./utilities";
+import { getAccentClass } from "../utilities/accentClasses";
 
 const FormSubmit = ({ accentColor, text }) => {
     return (

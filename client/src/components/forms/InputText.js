@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FormInputText = ({ label, placeholder, value, setValue, required }) => {
+const InputText = ({ label, placeholder, value, setValue, required }) => {
     return (
         <div>
             {label && <label>{label}</label>}
@@ -16,4 +16,4 @@ const FormInputText = ({ label, placeholder, value, setValue, required }) => {
     );
 }
 
-export default FormInputText;
+export default InputText;

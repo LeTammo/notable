@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import Login from './components/Login';
+import Login from './components/auth/Login';
 import Dashboard from './components/Dashboard';
 import CreateNote from './components/CreateNote';
 import Header from './components/Header';
-import Container from './components/Container';
-import Register from "./components/Register";
+import Register from "./components/auth/Register";
 import Footer from "./components/Footer";
 
 function App() {
@@ -16,9 +15,7 @@ function App() {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
-            validateToken(token);
-        }
+        if (token) validateToken(token);
     }, []);
 
     useEffect(() => {
@@ -77,23 +74,23 @@ function App() {
                     <Header accentColor={accentColor} handleLogout={handleLogout} isAuthenticated={isAuthenticated} />
                 </div>
                 <div className="pt-14 flex flex-col min-h-screen justify-center items-center">
-                    <Container>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <Routes>
                             <Route path="/" element={isAuthenticated
-                                ? <Navigate to="/dashboard" />
-                                : <Navigate to="/login" />} />
-                            <Route path="/register" element={<Register accentColor={accentColor} />} />
+                                ? <Navigate to="/dashboard"/>
+                                : <Navigate to="/login"/>}/>
+                            <Route path="/register" element={<Register accentColor={accentColor}/>}/>
                             <Route path="/login" element={isAuthenticated
-                                ? <Navigate to="/dashboard" />
-                                : <Login accentColor={accentColor} />} />
+                                ? <Navigate to="/dashboard"/>
+                                : <Login accentColor={accentColor}/>}/>
                             <Route path="/dashboard" element={isAuthenticated
-                                ? <Dashboard accentColor={accentColor} />
-                                : <Navigate to="/login" />} />
+                                ? <Dashboard accentColor={accentColor}/>
+                                : <Navigate to="/login"/>}/>
                             <Route path="/create" element={isAuthenticated
-                                ? <CreateNote accentColor={accentColor} />
-                                : <Navigate to="/login" />} />
+                                ? <CreateNote accentColor={accentColor}/>
+                                : <Navigate to="/login"/>}/>
                         </Routes>
-                    </Container>
+                    </div>
                 </div>
                 <div className="absolute bottom-0 right-0">
                     <Footer

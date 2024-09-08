@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import FormSubmit from "./FormSubmit";
-import FormInputText from "./FormInputText";
-import {getAccentClass} from "./utilities";
+import Submit from "../forms/Submit";
+import InputText from "../forms/InputText";
+import { getAccentClass } from "../utilities/accentClasses";
 
 function Register({accentColor}) {
     const [username, setUsername] = useState('');
@@ -34,22 +34,22 @@ function Register({accentColor}) {
             <h1 className="text-2xl mb-4">Create account</h1>
             <form onSubmit={handleRegister}>
                 {error && <p style={{color: 'red'}}>{error}</p>}
-                <FormInputText accentColor={accentColor}
-                               placeholder="Username"
-                               value={username}
-                               setValue={setUsername}
-                               required />
-                <FormInputText accentColor={accentColor}
-                               placeholder="Password"
-                               value={password}
-                               setValue={setPassword}
-                               required />
-                <FormInputText accentColor={accentColor}
-                               placeholder="Password (repeat)"
-                               value={password}
-                               setValue={setPassword}
-                               required />
-                <FormSubmit accentColor={accentColor} text="Register"/>
+                <InputText accentColor={accentColor}
+                           placeholder="Username"
+                           value={username}
+                           setValue={setUsername}
+                           required />
+                <InputText accentColor={accentColor}
+                           placeholder="Password"
+                           value={password}
+                           setValue={setPassword}
+                           required />
+                <InputText accentColor={accentColor}
+                           placeholder="Password (repeat)"
+                           value={password}
+                           setValue={setPassword}
+                           required />
+                <Submit accentColor={accentColor} text="Register"/>
             </form>
             <p className="mt-4 text-center">
                 <div>Already have an account?</div>
