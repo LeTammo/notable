@@ -1,19 +1,7 @@
 const express = require('express');
 const db = require('../db');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
-
-const authenticateToken = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Access denied, token missing!' });
-
-    try {
-        req.user = jwt.verify(token, process.env.JWT_SECRET);
-        next();
-    } catch (err) {
-        res.status(400).json({ error: 'Token is not valid' });
-    }
-};
+const authenticateToken = require('./middleware');
 
 router.post('/create', authenticateToken, (req, res) => {
     const { title, content, tags } = req.body;

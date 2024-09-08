@@ -38,7 +38,7 @@ const Dashboard = ({ accentColor }) => {
     };
 
     return (
-        <Container className="p-6 min-h-screen">
+        <Container className="p-6">
             <h1 className="text-3xl mb-6">Your Wiki Entries</h1>
             <input
                 type="text"

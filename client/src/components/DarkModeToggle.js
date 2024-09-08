@@ -4,7 +4,12 @@ import axios from "axios";
 
 const DarkModeToggle = ({ darkMode, setDarkMode }) => {
     const toggleDarkMode = async () => {
+        localStorage.setItem('darkMode', JSON.stringify(!darkMode));
         setDarkMode(!darkMode);
+
+        let token = localStorage.getItem('token');
+        if (!token) return;
+
         try {
             await axios.post('http://localhost:5000/preferences/dark-mode', { dark_mode: !darkMode }, {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

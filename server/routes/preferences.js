@@ -1,19 +1,7 @@
 const express = require('express');
 const db = require('../db');
-const jwt = require('jsonwebtoken');
 const router = express.Router();
-
-const authenticateToken = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) return res.status(401).json({ error: 'Access denied, token missing!' });
-
-    try {
-        req.user = jwt.verify(token, process.env.JWT_SECRET);
-        next();
-    } catch (err) {
-        res.status(400).json({ error: 'Token is not valid' });
-    }
-};
+const authenticateToken = require('./middleware');
 
 router.get('/', authenticateToken, (req, res) => {
     const userId = req.user.id;
@@ -27,13 +15,17 @@ router.post('/accent-color', authenticateToken, (req, res) => {
     const userId = req.user.id;
     const { accent_color } = req.body;
 
-    db.run(`
+    const query = `
         INSERT INTO preferences (user_id, accent_color) 
-        VALUES (?, ?) 
+        VALUES (?, ?)
         ON CONFLICT(user_id) 
-        DO UPDATE SET accent_color=excluded.accent_color
-    `, [userId, accent_color], (err) => {
-        if (err) return res.status(500).json({ error: 'Failed to update accent color preference' });
+        DO UPDATE SET accent_color = excluded.accent_color;
+    `;
+
+    db.run(query, [userId, accent_color], (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to update accent color preference' });
+        }
         res.status(200).json({ message: 'Accent color preference updated successfully' });
     });
 });

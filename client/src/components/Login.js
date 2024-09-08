@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import FormSubmit from "./FormSubmit";
+import FormInputText from "./FormInputText";
+import {getAccentClass} from "./utilities";
 
-const Login = () => {
+const Login = ({ accentColor }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -9,6 +12,7 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await axios.post('http://localhost:5000/auth/login', { username, password });
+            console.log(res.data);
             localStorage.setItem('token', res.data.token);
             window.location.href = '/dashboard';
         } catch (err) {
@@ -17,30 +21,25 @@ const Login = () => {
     };
 
     return (
-        <div className="flex justify-center items-center">
-            <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-lg">
-                <h1 className="text-2xl mb-4">Login</h1>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="block w-full mb-4 p-2 border border-gray-300 rounded"
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full mb-4 p-2 border border-gray-300 rounded"
-                />
-                <button
-                    type="submit"
-                    className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                >
-                    Login
-                </button>
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
+            <h1 className="text-2xl mb-4">Log in to Notable</h1>
+            <form onSubmit={handleLogin}>
+                <FormInputText accentColor={accentColor}
+                               placeholder="Username"
+                               value={username}
+                               setValue={setUsername}
+                               required />
+                <FormInputText accentColor={accentColor}
+                               placeholder="Password"
+                               value={password}
+                               setValue={setPassword}
+                               required />
+                <FormSubmit accentColor={accentColor} text="Log in" />
             </form>
+            <div className="mt-4 text-center">
+                <div>Don't have an account?</div>
+                <div className={`${getAccentClass(accentColor, 'text')}`}><a href="/register">Register here</a></div>
+            </div>
         </div>
     );
 };
