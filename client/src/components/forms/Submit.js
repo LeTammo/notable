@@ -1,14 +1,16 @@
 import React from 'react';
-import { getAccentClass } from "../utilities/accentClasses";
+import useResolveAccentColor from "../../hooks/useResolveAccentColor";
 
-const Submit = ({ accentColor, text }) => {
+const Submit = ({ text }) => {
+    const backgroundColor = useResolveAccentColor('background');
+
     return (
         <button
             type="submit"
             className={`
                 w-full
                 p-2
-                ${getAccentClass(accentColor, 'background')}
+                ${backgroundColor}
                 text-black
                 font-bold
                 rounded transition

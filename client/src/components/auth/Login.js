@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Submit from "../forms/Submit";
 import InputText from "../forms/InputText";
-import { getAccentClass } from "../utilities/accentClasses";
+import useResolveAccentColor from "../../hooks/useResolveAccentColor";
 
-const Login = ({ accentColor }) => {
+const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const textColor = useResolveAccentColor('text');
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,24 +22,22 @@ const Login = ({ accentColor }) => {
     };
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
+        <div>
             <h1 className="text-2xl mb-4">Log in to Notable</h1>
             <form onSubmit={handleLogin}>
-                <InputText accentColor={accentColor}
-                           placeholder="Username"
+                <InputText placeholder="Username"
                            value={username}
                            setValue={setUsername}
                            required />
-                <InputText accentColor={accentColor}
-                           placeholder="Password"
+                <InputText placeholder="Password"
                            value={password}
                            setValue={setPassword}
                            required />
-                <Submit accentColor={accentColor} text="Log in" />
+                <Submit text="Log in" />
             </form>
             <div className="mt-4 text-center">
                 <div>Don't have an account?</div>
-                <div className={`${getAccentClass(accentColor, 'text')}`}><a href="/auth/Register">Register here</a></div>
+                <div className={`${textColor}`}><a href="/auth/Register">Register here</a></div>
             </div>
         </div>
     );

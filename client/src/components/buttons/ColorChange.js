@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from "axios";
-import { getAccentClass } from "../utilities/accentClasses";
-import { colors } from "../utilities/colors";
+import { colors } from "../../utilities/colors";
+import { usePreferences } from '../../contexts/PreferencesContext';
+import { getAccentClass } from "../../utilities/accentClasses";
 
-const ColorChange = ({ accentColor, setAccentColor }) => {
+const ColorChange = () => {
+    const { accentColor, setAccentColor } = usePreferences();
+
     const handleColorChange = async (color) => {
         localStorage.setItem('accentColor', color);
         setAccentColor(color);

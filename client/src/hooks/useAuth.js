@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { usePreferences } from '../contexts/PreferencesContext';
 
 export const useAuth = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [accentColor, setAccentColor] = useState('blue');
-    const [darkMode, setDarkMode] = useState(true);
+    const { accentColor, setAccentColor, darkMode, setDarkMode } = usePreferences();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -60,14 +60,7 @@ export const useAuth = () => {
         }
     };
 
-    return {
-        isAuthenticated,
-        accentColor,
-        darkMode,
-        setDarkMode,
-        setAccentColor,
-        handleLogout
-    };
+    return { isAuthenticated, handleLogout };
 };
 
 export default useAuth;

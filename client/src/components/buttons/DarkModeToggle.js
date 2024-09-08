@@ -1,8 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import axios from "axios";
+import { usePreferences } from '../../contexts/PreferencesContext';
 
-const DarkModeToggle = ({ darkMode, setDarkMode }) => {
+const DarkModeToggle = () => {
+    const { darkMode, setDarkMode } = usePreferences();
+
     const toggleDarkMode = async () => {
         localStorage.setItem('darkMode', JSON.stringify(!darkMode));
         setDarkMode(!darkMode);

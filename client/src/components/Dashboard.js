@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getAccentClass } from './utilities/accentClasses';
+import useResolveAccentColor from "../hooks/useResolveAccentColor";
 import ButtonPrimary from "./buttons/ButtonPrimary";
 import InputText from "./forms/InputText";
 
-const Dashboard = ({ accentColor }) => {
+const Dashboard = () => {
     const navigate = useNavigate();
     const [entries, setEntries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const backgroundColor = useResolveAccentColor('background');
+    const textColor = useResolveAccentColor('text');
 
     useEffect(() => {
         const fetchEntries = async () => {
@@ -40,21 +42,20 @@ const Dashboard = ({ accentColor }) => {
 
     return (
         <div className="p-6">
-            <h1 className="text-3xl mb-6">Your Wiki Entries</h1>
             <InputText placeholder="Search..." value={searchTerm} setValue={setSearchTerm} />
-            <ButtonPrimary accentColor={accentColor} text="＋" onClick={() => navigate('/create')} />
+            <ButtonPrimary text="＋" onClick={() => navigate('/create')} />
             <div>
                 {entries.map((entry) => (
                     <div key={entry.id} className="mb-4 p-4 rounded shadow">
                         <h2 className="text-xl">{entry.title}</h2>
                         <p>{entry.content}</p>
-                        <p className={`${getAccentClass(accentColor, 'text')}`}>Tags: {entry.tags}</p>
+                        <p className={`${textColor}`}>Tags: {entry.tags}</p>
                     </div>
                 ))}
             </div>
             {hasMore && (
                 <button
-                    className={`mt-4 p-2 ${getAccentClass(accentColor, 'background')} text-white rounded transition`}
+                    className={`mt-4 p-2 ${backgroundColor} text-white rounded transition`}
                     onClick={loadMore}
                 >
                     Load More

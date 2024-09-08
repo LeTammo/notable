@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Submit from "../forms/Submit";
 import InputText from "../forms/InputText";
-import { getAccentClass } from "../utilities/accentClasses";
+import useResolveAccentColor from "../../hooks/useResolveAccentColor";
 
-function Register({accentColor}) {
+function Register() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const textColor = useResolveAccentColor('text');
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -30,30 +31,27 @@ function Register({accentColor}) {
     };
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg">
+        <div>
             <h1 className="text-2xl mb-4">Create account</h1>
             <form onSubmit={handleRegister}>
                 {error && <p style={{color: 'red'}}>{error}</p>}
-                <InputText accentColor={accentColor}
-                           placeholder="Username"
+                <InputText placeholder="Username"
                            value={username}
                            setValue={setUsername}
                            required />
-                <InputText accentColor={accentColor}
-                           placeholder="Password"
+                <InputText placeholder="Password"
                            value={password}
                            setValue={setPassword}
                            required />
-                <InputText accentColor={accentColor}
-                           placeholder="Password (repeat)"
+                <InputText placeholder="Password (repeat)"
                            value={password}
                            setValue={setPassword}
                            required />
-                <Submit accentColor={accentColor} text="Register"/>
+                <Submit text="Register"/>
             </form>
             <p className="mt-4 text-center">
                 <div>Already have an account?</div>
-                <div className={`${getAccentClass(accentColor, 'text')}`}><a href="/login">Log in here</a></div>
+                <div className={`${textColor}`}><a href="/login">Log in here</a></div>
             </p>
         </div>
     );

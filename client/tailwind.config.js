@@ -1,4 +1,4 @@
-import { colors } from "./src/components/utilities/colors";
+import { colors } from "./src/utilities/colors";
 
 module.exports = {
   darkMode: 'class',

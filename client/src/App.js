@@ -10,54 +10,42 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import Register from './components/auth/Register';
 
 function App() {
-    const {
-        isAuthenticated,
-        accentColor,
-        darkMode,
-        setDarkMode,
-        setAccentColor,
-        handleLogout
-    } = useAuth();
+    const { isAuthenticated, handleLogout } = useAuth();
 
     return (
         <Router>
             <div className="absolute top-0 w-full">
-                <Header accentColor={accentColor}
-                        handleLogout={handleLogout}
-                        isAuthenticated={isAuthenticated}
-                />
+                <Header handleLogout={handleLogout} isAuthenticated={isAuthenticated} />
             </div>
             <main className="flex flex-col min-h-screen justify-center items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <Routes>
-                        <Route path="/"
-                               element={isAuthenticated
-                                   ? <Navigate to="/dashboard"/>
-                                   : <Navigate to="/login"/>}
-                        />
-                        <Route path="/register"
-                               element={<Register accentColor={accentColor}/>}
-                        />
-                        <Route path="/login"
-                               element={isAuthenticated
-                                   ? <Navigate to="/dashboard"/>
-                                   : <Login accentColor={accentColor}/>}
-                        />
-                        <Route path="/dashboard"
-                               element={<ProtectedRoute isAuthenticated={isAuthenticated}>
-                                   <Dashboard accentColor={accentColor}/></ProtectedRoute>}/>
-                        <Route path="/create"
-                               element={<ProtectedRoute isAuthenticated={isAuthenticated}>
-                                   <CreateNote accentColor={accentColor}/></ProtectedRoute>}/>
-                    </Routes>
+                    <div className="p-10 bg-white dark:bg-slate-800 rounded-lg shadow-lg">
+                        <Routes>
+                            <Route path="/"
+                                   element={isAuthenticated
+                                       ? <Navigate to="/dashboard"/>
+                                       : <Navigate to="/login"/>}
+                            />
+                            <Route path="/register"
+                                   element={<Register />}
+                            />
+                            <Route path="/login"
+                                   element={isAuthenticated
+                                       ? <Navigate to="/dashboard"/>
+                                       : <Login />}
+                            />
+                            <Route path="/dashboard"
+                                   element={<ProtectedRoute isAuthenticated={isAuthenticated}>
+                                       <Dashboard /></ProtectedRoute>}/>
+                            <Route path="/create"
+                                   element={<ProtectedRoute isAuthenticated={isAuthenticated}>
+                                       <CreateNote /></ProtectedRoute>}/>
+                        </Routes>
+                    </div>
                 </div>
             </main>
             <div className="absolute bottom-0 right-0">
-                <Footer darkMode={darkMode}
-                        setDarkMode={setDarkMode}
-                        accentColor={accentColor}
-                        setAccentColor={setAccentColor}
-                />
+                <Footer />
             </div>
         </Router>
     );

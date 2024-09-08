@@ -1,12 +1,14 @@
 import React from 'react';
-import { getAccentClass } from "../utilities/accentClasses";
+import useResolveAccentColor from "../../hooks/useResolveAccentColor";
 
-const ButtonPrimary = ({ accentColor, text, onClick }) => {
+const ButtonPrimary = ({ text, onClick }) => {
+    const backgroundColor = useResolveAccentColor('background');
+
     return (
         <button className={`
                     w-full
                     p-2
-                    ${getAccentClass(accentColor, 'background')}
+                    ${backgroundColor}
                     text-black
                     font-bold
                     rounded
