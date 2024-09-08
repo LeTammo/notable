@@ -10,7 +10,7 @@ import Container from './components/Container';
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [accentColor, setAccentColor] = useState('blue');
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -41,24 +41,35 @@ function App() {
     };
 
     return (
-        <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
+        <div>
             <Router>
-                <Header
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                    accentColor={accentColor}
-                    setAccentColor={setAccentColor}
-                />
-                <Container>
-                    <Routes>
-                        <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
-                        <Route path="/dashboard" element={isAuthenticated ? <Dashboard accentColor={accentColor} /> : <Navigate to="/" />} />
-                        <Route path="/create" element={isAuthenticated ? <CreateNote accentColor={accentColor} /> : <Navigate to="/" />} />
-                    </Routes>
-                </Container>
+                <div className="absolute top-0 w-full">
+                    <Header
+                        darkMode={darkMode}
+                        setDarkMode={setDarkMode}
+                        accentColor={accentColor}
+                        setAccentColor={setAccentColor}
+                    />
+                </div>
+                <div className="flex flex-col min-h-screen justify-center items-center">
+                    <Container>
+                        <Routes>
+                            <Route path="/" element={isAuthenticated
+                                ? <Navigate to="/dashboard" />
+                                : <Login />} />
+                            <Route path="/dashboard" element={isAuthenticated
+                                ? <Dashboard accentColor={accentColor} />
+                                : <Navigate to="/" />} />
+                            <Route path="/create" element={isAuthenticated
+                                ? <CreateNote accentColor={accentColor} />
+                                : <Navigate to="/" />} />
+                        </Routes>
+                    </Container>
+                </div>
             </Router>
         </div>
     );
+
 }
 
 export default App;

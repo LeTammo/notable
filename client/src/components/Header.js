@@ -18,9 +18,9 @@ const Header = ({ darkMode, setDarkMode, accentColor, setAccentColor }) => {
     };
 
     return (
-        <header className={`p-4 flex justify-between items-center`}>
+        <header className={`p-4 flex justify-between items-center w-full`}>
             <h1 className={`text-3xl ${getAccentClass(accentColor, 'text')}`}>Notable</h1>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center">
                 {accentColors.map((color) => (
                     <div
                         style={{ width: '20px', height: '20px' }}
@@ -35,6 +35,7 @@ const Header = ({ darkMode, setDarkMode, accentColor, setAccentColor }) => {
             </div>
         </header>
     );
+
 };
 
 export default Header;
