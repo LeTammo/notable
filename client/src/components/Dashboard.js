@@ -41,15 +41,15 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="p-6">
-            <InputText placeholder="Search..." value={searchTerm} setValue={setSearchTerm} />
-            <ButtonPrimary text="＋" onClick={() => navigate('/create')} />
+        <div className="p-6 flex flex-row gap-20">
+            <div>
+                <InputText placeholder="Search..." value={searchTerm} setValue={setSearchTerm} />
+                <ButtonPrimary text="＋" onClick={() => navigate('/create')} />
+            </div>
             <div>
                 {entries.map((entry) => (
-                    <div key={entry.id} className="mb-4 p-4 rounded shadow">
-                        <h2 className="text-xl">{entry.title}</h2>
-                        <p>{entry.content}</p>
-                        <p className={`${textColor}`}>Tags: {entry.tags}</p>
+                    <div key={entry.id}>
+                        <div>{entry.title}</div>
                     </div>
                 ))}
             </div>

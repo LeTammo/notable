@@ -14,10 +14,10 @@ function App() {
 
     return (
         <Router>
-            <div className="absolute top-0 w-full">
+            <div className="sticky top-0 w-full">
                 <Header handleLogout={handleLogout} isAuthenticated={isAuthenticated} />
             </div>
-            <main className="flex flex-col min-h-screen justify-center items-center">
+            <main className="p-20 flex flex-col min-h-screen justify-center items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="p-10 bg-white dark:bg-slate-800 rounded-lg shadow-lg">
                         <Routes>
@@ -44,7 +44,7 @@ function App() {
                     </div>
                 </div>
             </main>
-            <div className="absolute bottom-0 right-0">
+            <div className="sticky w-full bottom-0 right-0">
                 <Footer />
             </div>
         </Router>
